@@ -60,3 +60,19 @@ Offensive Reconnaissance & Exploitation: Conducted network service enumeration w
 Threat Detection & SPL: Developed precision queries in Splunk to isolate malicious logon events (Event ID 4624/4625) and trace attacker origins.
 
 Infrastructure Management: Managed virtual networks, modified security controls for testing, and safely preserved configurations using VM snapshots.
+
+Troubleshooting & Lessons Learned
+1. Splunk Service Stability and Resource Provisioning
+Issue: The splunkd service would initialize and then immediately terminate.
+
+Resolution: Identified a resource bottleneck within the Virtual Machine. By increasing the allocated RAM from 4GB to 6GB and ensuring 2 CPU cores were provisioned, the Splunk indexing engine achieved a stable state.
+
+2. Manual Data Ingestion and UI Workarounds
+Issue: The Splunk Web interface encountered "Page Not Found" errors and failed to populate the Sysmon log path in the standard data input menus.
+
+Resolution: Bypassed GUI limitations by manually configuring the inputs.conf file in C:\Program Files\Splunk\etc\system\local\. By explicitly defining the Sysmon operational log stanza and restarting the service via the CLI, I successfully established the telemetry pipeline.
+
+Key Lessons
+Configuration over GUI: Relying on backend configuration files is often more reliable than web interfaces when managing enterprise security tools.
+
+Infrastructure Dependencies: A SIEM's effectiveness is directly dependent on the underlying hardware allocation. Monitoring system resources is a critical first step in troubleshooting ingestion failures.
